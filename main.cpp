@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 #include <omp.h>
 #include <cstdlib>
 #include <ctime>
@@ -19,61 +20,51 @@ int blank()
     return result;
 }
 
-int intRand(const int & min, const int & max) {
-    static thread_local std::mt19937 generator;
-    std::uniform_int_distribution<int> distribution(min,max);
-    return distribution(generator);
-}
-
-void arithmetic_series(float *series) // 3
+void arithmetic_series(float *series, float a, float d, bool sign, int n) // 3
 {
-    float a = intRand(0, 100), d = intRand(1, 10);
-    bool sign = intRand(0, 1);
     printf("\na = %f, d = %f, sign = %d arth_series\n", a, d, sign);
     int blnk = blank();
     series[0] = a;
-
-    for (int i = 1; i < S; i++)
-    {
-        if (sign == 0)
-            series[i] = series[i - 1] + d;
-        else if (sign == 1)
-            series[i] = series[i - 1] - d;
-    }
+    if (!sign)
+        #pragma omp parallel for
+        for(int i = 1; i < S; i++)
+            series[i] = a + i * d;
+    else
+        #pragma omp parallel for
+        for(int i = 1; i < S; i++)
+            series[i] = a - i * d;
 }
 
-void geometric_series(float *series) // 4
+void geometric_series(float *series, float a, float r, bool op, int n) // 4
 {
-    float a = intRand(1, 100), r = intRand(1, 10);
-    bool op = intRand(0, 1);
-    printf("\na = %f, r = %d, op = %d geo_series\n", a, r, op);
+    printf("\na = %f, r = %f, op = %d geo_series\n", a, r, op);
     int blnk = blank();
     series[0] = a;
 
-    for (int i = 1; i < S; i++)
-    {
-        if (op == 0)
-            series[i] = series[i - 1] * r;
-        else if (op == 1)
-            series[i] = series[i - 1] / r;
-    }
+    if (!op)
+        #pragma omp parallel for
+        for (int i = 1; i < S; i++)
+            series[i] = a * pow(r, i);
+    else
+        #pragma omp parallel for
+        for (int i = 1; i < S; i++)
+            series[i] = a / pow(r, i);
 }
 
-void harmonic_series(float *series) // 5
+void harmonic_series(float *series, float a, float d, bool sign, int n) // 5
 {
-    float a = intRand(0, 100), d = intRand(1, 10);
-    bool sign = intRand(0, 1);
     printf("\na = %f, d = %f, sign = %d harmonic_series\n", a, d, sign);
     int blnk = blank();
     series[0] = a;
 
-    for (int i = 1; i < S; i++)
-    {
-        if (sign == 0)
-            series[i] = 1 / (series[i - 1] + d);
-        else if (sign == 1)
-            series[i] = 1 / (series[i - 1] - d);
-    }
+    if (!sign)
+        #pragma omp parallel for
+        for (int i = 1; i < S; i++)
+            series[i] = 1 / (a + i * d);
+    else
+        #pragma omp parallel for
+        for (int i = 1; i < S; i++)
+            series[i] = 1 / (a - i * d);
 }
 
 void create_questions(float papers[][Q][S], int n, int ee) // 2
@@ -82,17 +73,17 @@ void create_questions(float papers[][Q][S], int n, int ee) // 2
     #pragma omp parallel
     {
         float series[S];
-        // srand(int(time(NULL)) ^ omp_get_thread_num());
-        #pragma omp for schedule(dynamic, 4)
+        #pragma omp for
         for (int i = 0; i < Q; i++)
         {
+            srand((n + 5) * (i + 33) * (i + 1));
             int tid = omp_get_thread_num();
             printf("\nee tid = %d, i = %d", tid, i);
 
             if (tid == 0)
             {
                 printf("\ntid = %d, i = %d, from create_papers()-%d, calling geometric\n", tid, i, ee);
-                geometric_series(series); // 4
+                geometric_series(series, 1 + (rand() % 100), 2 + (rand() % 10), (rand() % 2), 10); // 4
                 for (int j = 0; j < S; j++)
                 {
                     papers[n][i][j] = series[j];
@@ -101,7 +92,7 @@ void create_questions(float papers[][Q][S], int n, int ee) // 2
             else if (tid == 1)
             {
                 printf("\ntid = %d, i = %d, from create_papers()-%d, calling harmonic\n", tid, i, ee);
-                harmonic_series(series); // 5
+                harmonic_series(series, 1 + (rand() % 100), 1 + (rand() % 10), (rand() % 2), 10); // 5
                 for (int j = 0; j < S; j++)
                 {
                     papers[n][i][j] = series[j];
@@ -110,7 +101,7 @@ void create_questions(float papers[][Q][S], int n, int ee) // 2
             else
             {
                 printf("\ntid = %d, i = %d, from create_papers()-%d, calling arithmetic\n", tid, i, ee);
-                arithmetic_series(series); // 6
+                arithmetic_series(series, (rand() % 100), 1 + (rand() % 10), (rand() % 2), 10); // 6
                 for (int j = 0; j < S; j++)
                 {
                     papers[n][i][j] = series[j];
@@ -125,7 +116,6 @@ void create_papers(float papers[][Q][S]) // 1
     omp_set_num_threads(4);
     #pragma omp parallel
     {
-        // srand(int(time(NULL)) ^ omp_get_thread_num());
         #pragma omp for
         for (int i = 0; i < N; i++)
         {
@@ -159,7 +149,6 @@ void print_papers(float papers[][Q][S])
 
 int main()
 {
-    // srand((float) time(0));
     omp_set_num_threads(N*Q);
     omp_set_nested(1);
     float papers[N][Q][S];
