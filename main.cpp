@@ -13,7 +13,7 @@ using namespace std;
 Creating IQ exams of N number and each exam consists of Q questions and each question(series) consists of S terms
 */
 
-void arithmetic_series(float* series, float a, float d, bool sign, int n) // 3
+void arithmetic_series(float* series, float a, float d, bool sign) // 3
 {
     // printf("\na = %.4f, d = %.4f, sign = %d arth_series\n", a, d, sign);
     series[0] = a;
@@ -34,7 +34,7 @@ void arithmetic_series(float* series, float a, float d, bool sign, int n) // 3
     series[S - 1] = 0;
 }
 
-void geometric_series(float* series, float a, float r, bool op, int n) // 4
+void geometric_series(float* series, float a, float r, bool op) // 4
 {
     // printf("\na = %.4f, r = %.4f, op = %d geo_series\n", a, r, op);
     series[0] = a;
@@ -56,7 +56,7 @@ void geometric_series(float* series, float a, float r, bool op, int n) // 4
     series[S - 1] = 1;
 }
 
-void harmonic_series(float* series, float a, float d, bool sign, int n) // 5
+void harmonic_series(float* series, float a, float d, bool sign) // 5
 {
     // printf("\na = %.4f, d = %.4f, sign = %d harmonic_series\n", a, d, sign);
     series[0] = a;
@@ -93,8 +93,8 @@ void create_questions(float papers[][Q][S], int n, int ee) // 2
 
             if (tid == 0)
             {
-                // printf("\ntid = %d, i = %d, from create_papers()-%d, calling geometric\n", tid, i, ee);
-                geometric_series(series, 1 + (rand() % 100), 2 + (rand() % 10), (rand() % 2), 10); // 4
+                // printf("\ntid = %d, i = %d, from create_papers() _ %d, calling geometric\n", tid, i, ee);
+                geometric_series(series, 1 + (rand() % 100), 2 + (rand() % 10), (rand() % 2)); // 4
                 for (int j = 0; j < S; j++)
                 {
                     papers[n][i][j] = series[j];
@@ -103,7 +103,7 @@ void create_questions(float papers[][Q][S], int n, int ee) // 2
             else if (tid == 1)
             {
                 // printf("\ntid = %d, i = %d, from create_papers()-%d, calling harmonic\n", tid, i, ee);
-                harmonic_series(series, 1 + (rand() % 100), 1 + (rand() % 7), (rand() % 2), 10); // 5
+                harmonic_series(series, 1 + (rand() % 100), 1 + (rand() % 7), (rand() % 2)); // 5
                 for (int j = 0; j < S; j++)
                 {
                     papers[n][i][j] = series[j];
@@ -112,7 +112,7 @@ void create_questions(float papers[][Q][S], int n, int ee) // 2
             else
             {
                 // printf("\ntid = %d, i = %d, from create_papers()-%d, calling arithmetic\n", tid, i, ee);
-                arithmetic_series(series, (rand() % 100), 1 + (rand() % 30), (rand() % 2), 10); // 6
+                arithmetic_series(series, (rand() % 100), 1 + (rand() % 30), (rand() % 2)); // 6
                 for (int j = 0; j < S; j++)
                 {
                     papers[n][i][j] = series[j];
@@ -156,12 +156,12 @@ void print_papers(float papers[][Q][S])
                 if (k != S - 2)
                     cout << "+ ";
             }
-            // if(!papers[i][j][S - 1])
-            //     cout << "\t\t\tArithmetic Series";
-            // else if (papers[i][j][S - 1] == 1)
-            //     cout << "\t\t\tGeometric Series";
-            // else 
-            //     cout << "\t\t\tHarmonic Series";
+/*          if(!papers[i][j][S - 1])
+                cout << "\t\t\tArithmetic Series";
+            else if (papers[i][j][S - 1] == 1)
+                cout << "\t\t\tGeometric Series";
+            else 
+                cout << "\t\t\tHarmonic Series";    */
             cout << endl;
         }
     }
@@ -172,15 +172,6 @@ int main()
     omp_set_num_threads(N*Q);
     omp_set_nested(1);
     float papers[N][Q][S];
-    #pragma omp parallel
-    {
-        #pragma omp sections
-        {
-            #pragma omp section
-            {
-                create_papers(papers); // 0
-            }
-        }
-    }
+    create_papers(papers); // 0
     print_papers(papers);
 }
