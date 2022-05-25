@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <math.h>
+#include <fstream>
+#include <string>
 #define N 5         // number of papers
 #define Q 12        // number of questions in a paper
 #define S 10 + 1    // number of term in a series + 1 (Name of series: 0 = Arithmetic, 1 = Geometric, 2 = Harmonic)
@@ -139,22 +141,35 @@ void create_papers(float papers[][Q][S]) // 1
 
 void print_papers(float papers[][Q][S])
 {
+    ofstream MyFile;
     for (int i = 0; i < N; i++)
     {
+        MyFile.open("./files/Paper " + to_string(i + 1) + ".txt");
         cout << "\nPaper Number: " << i + 1 << "\n" << endl;
+        MyFile << "\nPaper Number: " << i + 1 << "\n" << endl;
         for (int j = 0; j < Q; j++)
         {
             cout << "Question Number " << j + 1 << ":\t";
+            MyFile << "Question Number " << j + 1 << ":\t";
             srand((S + 3321) * (j + 53) * (i + 44));
             int b = 1 + (rand() % (S - 2));
             for (int k = 0; k < S - 1; k++)
             {
                 if(k == b)
+                {
                     cout << "__________ ";
+                    MyFile << "__________ ";
+                }
                 else
+                {
                     cout << papers[i][j][k] << " ";
+                    MyFile << papers[i][j][k] << " ";
+                }
                 if (k != S - 2)
+                {
                     cout << "+ ";
+                    MyFile << "+ ";
+                }
             }
 /*          if(!papers[i][j][S - 1])
                 cout << "\t\t\tArithmetic Series";
@@ -162,8 +177,12 @@ void print_papers(float papers[][Q][S])
                 cout << "\t\t\tGeometric Series";
             else 
                 cout << "\t\t\tHarmonic Series";    */
+            cout << "\tAnswer: " << papers[i][j][b];
+            MyFile << "\tAnswer: " << papers[i][j][b];
             cout << endl;
+            MyFile << endl;
         }
+        MyFile.close();
     }
 }
 
