@@ -182,14 +182,23 @@ void print_papers(float papers[][Q][S])
                     MyFile << "+ ";
                 }
             }
-/*          if(!papers[i][j][S - 1])
-                cout << "\t\t\tArithmetic Series";
-            else if (papers[i][j][S - 1] == 1)
-                cout << "\t\t\tGeometric Series";
-            else 
-                cout << "\t\t\tHarmonic Series";    */
             cout << "\tAnswer: " << papers[i][j][b];
             MyFile << "\tAnswer: " << papers[i][j][b];
+            if(!papers[i][j][S - 1])
+            {
+                MyFile << "\t\t\tArithmetic Series";
+                // cout << "\t\t\tArithmetic Series";
+            }
+            else if (papers[i][j][S - 1] == 1)
+            {
+                MyFile << "\t\t\tGeometric Series";
+                // cout << "\t\t\tGeometric Series";
+            }
+            else 
+            {
+                MyFile << "\t\t\tHarmonic Series";
+                // cout << "\t\t\tHarmonic Series";
+            }
             cout << endl;
             MyFile << endl;
         }
@@ -200,7 +209,7 @@ void print_papers(float papers[][Q][S])
     MyFile2.close();
     MyFile3.close();
     remove("./files/iteration.txt");
-   	rename("./files/new.txt", "./files/iteration.txt");
+    rename("./files/new.txt", "./files/iteration.txt");
 }
 
 int main()
@@ -210,4 +219,5 @@ int main()
     float papers[N][Q][S];
     create_papers(papers); // 0
     print_papers(papers);
+
 }
