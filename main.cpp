@@ -6,6 +6,7 @@
 #include <math.h>
 #include <fstream>
 #include <string>
+#include <direct.h>
 #define N 5         // number of papers
 #define Q 12        // number of questions in a paper
 #define S 10 + 1    // number of term in a series + 1 (Name of series: 0 = Arithmetic, 1 = Geometric, 2 = Harmonic)
@@ -142,15 +143,25 @@ void create_papers(float papers[][Q][S]) // 1
 void print_papers(float papers[][Q][S])
 {
     ofstream MyFile;
+    ifstream MyFile2("./files/iteration.txt");
+    ofstream MyFile3("./files/new.txt");
+    int s_number;
+    MyFile2 >> s_number;
+    if(mkdir(("./files/Batch " + to_string(s_number)).c_str()) == -1)
+        cout << " Error : " << strerror(errno) << endl;
+    else
+        cout << "Folder Created";
     for (int i = 0; i < N; i++)
     {
-        MyFile.open("./files/Paper " + to_string(i + 1) + ".txt");
+        MyFile.open("./files/Batch " + to_string(s_number) + "/Paper " + to_string(i + 1) + ".txt");
         cout << "\nPaper Number: " << i + 1 << "\n" << endl;
         MyFile << "\nPaper Number: " << i + 1 << "\n" << endl;
         for (int j = 0; j < Q; j++)
         {
             cout << "Question Number " << j + 1 << ":\t";
             MyFile << "Question Number " << j + 1 << ":\t";
+            if(j < 9)
+                MyFile << "\t";
             srand((S + 3321) * (j + 53) * (i + 44));
             int b = 1 + (rand() % (S - 2));
             for (int k = 0; k < S - 1; k++)
@@ -184,6 +195,12 @@ void print_papers(float papers[][Q][S])
         }
         MyFile.close();
     }
+    int number2 = s_number + 1;
+    MyFile3<<number2;
+    MyFile2.close();
+    MyFile3.close();
+    remove("./files/iteration.txt");
+   	rename("./files/new.txt", "./files/iteration.txt");
 }
 
 int main()
