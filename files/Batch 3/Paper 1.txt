@@ -1,0 +1,15 @@
+
+Paper Number: 1
+
+Question Number 1:		7 + 1.16667 + 0.194444 + 0.0324074 + 0.00540123 + 0.000900206 + 0.000150034 + 2.50057e-05 + 4.16762e-06 + __________ 	Answer: 6.94603e-07			Geometric Series
+Question Number 2:		9 + __________ + 1089 + 11979 + 131769 + 1.44946e+06 + 1.5944e+07 + 1.75385e+08 + 1.92923e+09 + 2.12215e+10 	Answer: 99			Geometric Series
+Question Number 3:		81 + 10.125 + 1.26562 + __________ + 0.0197754 + 0.00247192 + 0.00030899 + 3.86238e-05 + 4.82798e-06 + 6.03497e-07 	Answer: 0.158203			Geometric Series
+Question Number 4:		18 + 3 + 0.5 + 0.0833333 + 0.0138889 + __________ + 0.000385802 + 6.43004e-05 + 1.07167e-05 + 1.78612e-06 	Answer: 0.00231481			Geometric Series
+Question Number 5:		25 + 0.05 + 0.0666667 + 0.1 + 0.2 + inf + __________ + -0.1 + -0.0666667 + -0.05 	Answer: -0.2			Harmonic Series
+Question Number 6:		98 + 0.0103093 + 0.0104167 + 0.0105263 + 0.0106383 + 0.0107527 + 0.0108696 + 0.010989 + __________ + 0.011236 	Answer: 0.0111111			Harmonic Series
+Question Number 7:		41 + __________ + 0.0222222 + 0.0212766 + 0.0204082 + 0.0196078 + 0.0188679 + 0.0181818 + 0.0175439 + 0.0169492 	Answer: 0.0232558			Harmonic Series
+Question Number 8:		17 + 0.0714286 + __________ + 0.125 + 0.2 + 0.5 + -1 + -0.25 + -0.142857 + -0.1 	Answer: 0.0909091			Harmonic Series
+Question Number 9:		26 + -4 + -34 + -64 + __________ + -124 + -154 + -184 + -214 + -244 	Answer: -94			Arithmetic Series
+Question Number 10:	38 + 39 + 40 + 41 + 42 + 43 + __________ + 45 + 46 + 47 	Answer: 44			Arithmetic Series
+Question Number 11:	51 + 40 + 29 + 18 + 7 + -4 + -15 + -26 + __________ + -48 	Answer: -37			Arithmetic Series
+Question Number 12:	99 + __________ + 89 + 84 + 79 + 74 + 69 + 64 + 59 + 54 	Answer: 94			Arithmetic Series
