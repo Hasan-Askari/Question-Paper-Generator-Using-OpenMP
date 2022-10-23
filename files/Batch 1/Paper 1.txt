@@ -1,15 +1,15 @@
 
 Paper Number: 1
 
-Question Number 1:		7 + 0.25 + 1 + -0.5 + -0.2 + -0.125 + -0.0909091 + -0.0714286 + -0.0588235 + __________ 	Answer: -0.05			Harmonic Series
-Question Number 2:		9 + __________ + 0.0666667 + 0.0555556 + 0.047619 + 0.0416667 + 0.037037 + 0.0333333 + 0.030303 + 0.0277778 	Answer: 0.0833333			Harmonic Series
-Question Number 3:		81 + 0.0131579 + 0.0140845 + __________ + 0.0163934 + 0.0178571 + 0.0196078 + 0.0217391 + 0.0243902 + 0.0277778 	Answer: 0.0151515			Harmonic Series
-Question Number 4:		18 + 0.0714286 + 0.1 + 0.166667 + 0.5 + __________ + -0.166667 + -0.1 + -0.0714286 + -0.0555556 	Answer: -0.5			Harmonic Series
+Question Number 1:		7 + 1.16667 + 0.194444 + 0.0324074 + 0.00540123 + 0.000900206 + 0.000150034 + 2.50057e-05 + 4.16762e-06 + __________ 	Answer: 6.94603e-07			Geometric Series
+Question Number 2:		9 + __________ + 1089 + 11979 + 131769 + 1.44946e+06 + 1.5944e+07 + 1.75385e+08 + 1.92923e+09 + 2.12215e+10 	Answer: 99			Geometric Series
+Question Number 3:		81 + 10.125 + 1.26562 + __________ + 0.0197754 + 0.00247192 + 0.00030899 + 3.86238e-05 + 4.82798e-06 + 6.03497e-07 	Answer: 0.158203			Geometric Series
+Question Number 4:		18 + 3 + 0.5 + 0.0833333 + 0.0138889 + __________ + 0.000385802 + 6.43004e-05 + 1.07167e-05 + 1.78612e-06 	Answer: 0.00231481			Geometric Series
 Question Number 5:		25 + 8.33333 + 2.77778 + 0.925926 + 0.308642 + 0.102881 + __________ + 0.0114312 + 0.00381039 + 0.00127013 	Answer: 0.0342936			Geometric Series
 Question Number 6:		98 + 49 + 24.5 + 12.25 + 6.125 + 3.0625 + 1.53125 + 0.765625 + __________ + 0.191406 	Answer: 0.382812			Geometric Series
 Question Number 7:		41 + __________ + 4100 + 41000 + 410000 + 4.1e+06 + 4.1e+07 + 4.1e+08 + 4.1e+09 + 4.1e+10 	Answer: 410			Geometric Series
 Question Number 8:		17 + 1.54545 + __________ + 0.0127724 + 0.00116112 + 0.000105557 + 9.59606e-06 + 8.72369e-07 + 7.93063e-08 + 7.20966e-09 	Answer: 0.140496			Geometric Series
-Question Number 9:		26 + -4 + -34 + -64 + __________ + -124 + -154 + -184 + -214 + -244 	Answer: -94			Arithmetic Series
-Question Number 10:	38 + 39 + 40 + 41 + 42 + 43 + __________ + 45 + 46 + 47 	Answer: 44			Arithmetic Series
-Question Number 11:	51 + 40 + 29 + 18 + 7 + -4 + -15 + -26 + __________ + -48 	Answer: -37			Arithmetic Series
-Question Number 12:	99 + __________ + 89 + 84 + 79 + 74 + 69 + 64 + 59 + 54 	Answer: 94			Arithmetic Series
+Question Number 9:		27 + 2.45455 + 0.22314 + 0.0202855 + __________ + 0.000167649 + 1.52408e-05 + 1.38553e-06 + 1.25957e-07 + 1.14506e-08 	Answer: 0.00184414			Geometric Series
+Question Number 10:	39 + 78 + 156 + 312 + 624 + 1248 + __________ + 4992 + 9984 + 19968 	Answer: 2496			Geometric Series
+Question Number 11:	52 + 26 + 13 + 6.5 + 3.25 + 1.625 + 0.8125 + 0.40625 + __________ + 0.101562 	Answer: 0.203125			Geometric Series
+Question Number 12:	100 + __________ + 2.77778 + 0.462963 + 0.0771605 + 0.0128601 + 0.00214335 + 0.000357225 + 5.95374e-05 + 9.9229e-06 	Answer: 16.6667			Geometric Series

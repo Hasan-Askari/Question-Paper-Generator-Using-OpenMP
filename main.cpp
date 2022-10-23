@@ -7,9 +7,11 @@
 #include <fstream>
 #include <string>
 #include <direct.h>
-#define N 5         // number of papers
-#define Q 12        // number of questions in a paper
-#define S 10 + 1    // number of term in a series + 1 (Name of series: 0 = Arithmetic, 1 = Geometric, 2 = Harmonic)
+#include <time.h>
+#define NumThreads 4        // number of threads
+#define N 5                 // number of papers
+#define Q 12                // number of questions in a paper
+#define S 10 + 1            // number of term in a series + 1 (Name of series: 0 = Arithmetic, 1 = Geometric, 2 = Harmonic)
 
 using namespace std;
 /*
@@ -25,14 +27,14 @@ void arithmetic_series(float* series, float a, float d, bool sign) // 3
         for(int i = 1; i < S; i++)
         {
             series[i] = a + i * d;
-            // printf("\na = %.4f, d = %.4f, series[i] = %.4f, series = arithmetic, tid = %d", a, d, series[i], omp_get_thread_num());
+            printf("\na = %.4f, d = %.4f, series[i] = %.4f, series = arithmetic, tid = %d", a, d, series[i], omp_get_thread_num());
         }
     else
         #pragma omp parallel for
         for(int i = 1; i < S; i++)
         {
             series[i] = a - i * d;
-            // printf("\na = %.4f, d = %.4f, series[i] = %.4f, series = arithmetic, tid = %d", a, d, series[i], omp_get_thread_num());
+            printf("\na = %.4f, d = %.4f, series[i] = %.4f, series = arithmetic, tid = %d", a, d, series[i], omp_get_thread_num());
         }
     series[S - 1] = 0;
 }
@@ -47,14 +49,14 @@ void geometric_series(float* series, float a, float r, bool op) // 4
         for (int i = 1; i < S; i++)
         {
             series[i] = a * pow(r, i);
-            // printf("\na = %.4f, d = %.4f, series[i] = %.4f, series = geometric, tid = %d", a, r, series[i], omp_get_thread_num());
+            printf("\na = %.4f, d = %.4f, series[i] = %.4f, series = geometric, tid = %d", a, r, series[i], omp_get_thread_num());
         }
     else
         #pragma omp parallel for
         for (int i = 1; i < S; i++)
         {
             series[i] = a / pow(r, i);
-            // printf("\na = %.4f, d = %.4f, series[i] = %.4f, series = geometric, tid = %d", a, r, series[i], omp_get_thread_num());
+            printf("\na = %.4f, d = %.4f, series[i] = %.4f, series = geometric, tid = %d", a, r, series[i], omp_get_thread_num());
         }
     series[S - 1] = 1;
 }
@@ -69,21 +71,21 @@ void harmonic_series(float* series, float a, float d, bool sign) // 5
         for (int i = 1; i < S; i++)
         {
             series[i] = 1 / (a + i * d);
-            // printf("\na = %.4f, d = %.4f, series[i] = %.4f, series = harmonic, tid = %d", a, d, series[i], omp_get_thread_num());
+            printf("\na = %.4f, d = %.4f, series[i] = %.4f, series = harmonic, tid = %d", a, d, series[i], omp_get_thread_num());
         }
     else
         #pragma omp parallel for
         for (int i = 1; i < S; i++)
         {
             series[i] = 1 / (a - i * d);
-            // printf("\na = %.4f, d = %.4f, series[i] = %.4f, series = harmonic, tid = %d", a, d, series[i], omp_get_thread_num());
+            printf("\na = %.4f, d = %.4f, series[i] = %.4f, series = harmonic, tid = %d", a, d, series[i], omp_get_thread_num());
         }
     series[S - 1] = 2;
 }
 
 void create_questions(float papers[][Q][S], int n, int ee) // 2
 {
-    omp_set_num_threads(4);
+    omp_set_num_threads(NumThreads);
     #pragma omp parallel
     {
         float series[S];
@@ -94,7 +96,7 @@ void create_questions(float papers[][Q][S], int n, int ee) // 2
             int tid = omp_get_thread_num();
             // printf("\nee tid = %d, i = %d", tid, i);
 
-            if (tid == 0)
+            if ((tid % 3) == 0)
             {
                 // printf("\ntid = %d, i = %d, from create_papers() _ %d, calling geometric\n", tid, i, ee);
                 geometric_series(series, 1 + (rand() % 100), 2 + (rand() % 10), (rand() % 2)); // 4
@@ -103,7 +105,7 @@ void create_questions(float papers[][Q][S], int n, int ee) // 2
                     papers[n][i][j] = series[j];
                 }
             }
-            else if (tid == 1)
+            else if ((tid % 3) == 1)
             {
                 // printf("\ntid = %d, i = %d, from create_papers()-%d, calling harmonic\n", tid, i, ee);
                 harmonic_series(series, 1 + (rand() % 100), 1 + (rand() % 7), (rand() % 2)); // 5
@@ -127,7 +129,7 @@ void create_questions(float papers[][Q][S], int n, int ee) // 2
 
 void create_papers(float papers[][Q][S]) // 1
 {
-    omp_set_num_threads(4);
+    omp_set_num_threads(NumThreads);
     #pragma omp parallel
     {
         #pragma omp for
@@ -187,17 +189,17 @@ void print_papers(float papers[][Q][S])
             if(!papers[i][j][S - 1])
             {
                 MyFile << "\t\t\tArithmetic Series";
-                // cout << "\t\t\tArithmetic Series";
+                cout << "\t\t\tArithmetic Series";
             }
             else if (papers[i][j][S - 1] == 1)
             {
                 MyFile << "\t\t\tGeometric Series";
-                // cout << "\t\t\tGeometric Series";
+                cout << "\t\t\tGeometric Series";
             }
             else 
             {
                 MyFile << "\t\t\tHarmonic Series";
-                // cout << "\t\t\tHarmonic Series";
+                cout << "\t\t\tHarmonic Series";
             }
             cout << endl;
             MyFile << endl;
@@ -214,10 +216,13 @@ void print_papers(float papers[][Q][S])
 
 int main()
 {
-    omp_set_num_threads(N*Q);
+    omp_set_num_threads(NumThreads * N);
     omp_set_nested(1);
+    clock_t before = clock();
     float papers[N][Q][S];
     create_papers(papers); // 0
     print_papers(papers);
-
+    clock_t after = clock();
+	clock_t run_time = after - before;
+    cout << "Running Time: " << run_time << ", Number Of Threads: " << NumThreads << endl;
 }
